@@ -1,5 +1,5 @@
-#include <stdint.h>
 #include <stdio.h>
+#include "crc_16ccitt.h"
 
 #define CRC16 0x1021
 

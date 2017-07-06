@@ -1,9 +1,9 @@
 /** Created by Andrea Bonanzinga on 7/6/17. **/
 
-#include "../CommunicationProtocol/protocol_keywords.h"
-
 #ifndef COMMUNICATIONCHANNEL_SERIAL_COMMUNICATION_FUNCTIONS_H
 #define COMMUNICATIONCHANNEL_SERIAL_COMMUNICATION_FUNCTIONS_H
+
+#include "../CommunicationProtocol/protocol_keywords.h"
 
 int set_interface_attribs (int fd, int speed, int parity, int should_block);
 int start_connection();

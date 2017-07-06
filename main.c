@@ -30,7 +30,6 @@ int main() {
         perror("Something goes wrong");
         return -1;
     }
-
     do {
         s = instruction_menu();
         if( s >= 1 && s <= 4 ) {

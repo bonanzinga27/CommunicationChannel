@@ -1,13 +1,13 @@
 /** Created by Andrea Bonanzinga on 7/6/17. **/
 
-#include "serial_communication_functions.h"
 #include <stdio.h>
 #include <stdint.h>
 #include <fcntl.h>
 #include <termio.h>
 #include <unistd.h>
 #include <stdbool.h>
-#include "../CRC_16-CCITT/crc_16ccitt.c"
+#include "../CRC_16-CCITT/crc_16ccitt.h"
+#include "serial_communication_functions.h"
 
 int start_connection(){
     //unsigned char portname = portname_selection();
@@ -21,6 +21,7 @@ int start_connection(){
     if( tcflush(fd,TCIOFLUSH) == 0)
         printf("%s successfully flushed.\n", "/dev/ttyACM0");
     sleep(2);
+    printf("Start connection finished.\n");
     return fd;
 }
 
@@ -53,6 +54,7 @@ int set_interface_attribs (int fd, int speed, int parity, int should_block) {
         perror("error from tcsetattr-");
         return -1;
     }
+    printf("Serial inferface correctly configured");
     return 0;
 }
 
@@ -121,10 +123,9 @@ void transmit_instruction_frame(int fd, int id, int instruction, unsigned char p
 }
 
 _Bool receive_status_frame(int fd,int id,unsigned char instruction[]){
-
     int count = 0;
     int buff_length;
-    unsigned char buf;
+    unsigned char* buf;
     unsigned char first_header = 0x00;
     _Bool valid_header = false;
     while (valid_header == false && count < 4) {
@@ -145,7 +146,7 @@ _Bool receive_status_frame(int fd,int id,unsigned char instruction[]){
         read(fd, &instruction[i],1);
         printf("%X ",instruction[i]);
     }
-    printf("\nI'm returning %X",instruction[1]);
+    //printf("\nI'm returning %X",instruction[1]);
     if( instruction[1] == ACK)
         return true;                                          // Instruction[1] contain the acknowledgment information
     return false;
