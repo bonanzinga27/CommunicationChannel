@@ -9,11 +9,7 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="86a962e4-7807-49e3-8187-fb0724b5aaee" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/CommuniationFunctions/serial_communication_functions.c" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/CommuniationFunctions/serial_communication_functions.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/CommunicationProtocol/protocol_keywords.h" />
-    </list>
+    <list default="true" id="86a962e4-7807-49e3-8187-fb0724b5aaee" name="Default" comment="" />
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -38,14 +34,14 @@
       <file leaf-file-name="serial_communication_functions.c" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/CommuniationFunctions/serial_communication_functions.c">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="208">
-              <caret line="145" column="0" lean-forward="true" selection-start-line="145" selection-start-column="0" selection-end-line="145" selection-end-column="0" />
+            <state relative-caret-position="144">
+              <caret line="54" column="1" lean-forward="false" selection-start-line="54" selection-start-column="1" selection-end-line="54" selection-end-column="1" />
               <folding>
                 <element signature="e#94#574#0" expanded="false" />
                 <element signature="e#576#2090#0" expanded="false" />
                 <element signature="e#2092#2147#0" expanded="false" />
-                <element signature="e#2149#3968#0" expanded="false" />
-                <element signature="e#3970#5057#0" expanded="false" />
+                <element signature="e#2150#3969#0" expanded="false" />
+                <element signature="e#3971#5058#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -60,8 +56,8 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/SerialCom/serial_communication.h" />
-        <option value="$PROJECT_DIR$/CommuniationFunctions/serial_communication_functions.c" />
         <option value="$PROJECT_DIR$/CommuniationFunctions/serial_communication_functions.h" />
+        <option value="$PROJECT_DIR$/CommuniationFunctions/serial_communication_functions.c" />
       </list>
     </option>
   </component>
@@ -342,12 +338,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1499348215971</updated>
-      <workItem from="1499348217526" duration="1533000" />
+      <workItem from="1499348217526" duration="1626000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1533000" />
+    <option name="totallyTimeSpent" value="1626000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="27" width="1914" height="1053" extended-state="4" />
@@ -436,14 +432,14 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/CommuniationFunctions/serial_communication_functions.c">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="208">
-          <caret line="145" column="0" lean-forward="true" selection-start-line="145" selection-start-column="0" selection-end-line="145" selection-end-column="0" />
+        <state relative-caret-position="144">
+          <caret line="54" column="1" lean-forward="false" selection-start-line="54" selection-start-column="1" selection-end-line="54" selection-end-column="1" />
           <folding>
             <element signature="e#94#574#0" expanded="false" />
             <element signature="e#576#2090#0" expanded="false" />
             <element signature="e#2092#2147#0" expanded="false" />
-            <element signature="e#2149#3968#0" expanded="false" />
-            <element signature="e#3970#5057#0" expanded="false" />
+            <element signature="e#2150#3969#0" expanded="false" />
+            <element signature="e#3971#5058#0" expanded="false" />
           </folding>
         </state>
       </provider>
