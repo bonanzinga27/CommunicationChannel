@@ -181,8 +181,8 @@ int instruction_menu(void){
 
 void transmit_instruction_frame(int fd, int id, int instruction, unsigned char params[], unsigned char values [], unsigned char params_size){
 
-    unsigned char frame_length = (unsigned char)(5 + 2 * (int)params_size);      // Viene considerato anche id e istruzione
-    unsigned char frame[ HEADER_LENGTH + frame_length ];
+    unsigned char frame_length = (unsigned char)(4 + 2 * (int)params_size);      // Viene considerato anche id e istruzione
+    unsigned char frame[ HEADER_LENGTH + frame_length +1 ];
     unsigned char instruction_type = 0x00;
     //printf("Frame length is: %d\n",HEADER_LENGTH + frame_length);
 
@@ -231,10 +231,10 @@ void transmit_instruction_frame(int fd, int id, int instruction, unsigned char p
     printf("CRC is: %X\n",crc);
     /*printf("CRC high is: %X\n",crc_high);
     printf("CRC low is: %X\n",crc_low);*/
-    printf("\nI'm sending: ");
+    /*printf("\nI'm sending: ");
     for( int i = 0; i< sizeof(frame); i++) {
         printf("%X ",frame[i]);
-    }
+    }*/
     write(fd, frame, sizeof(frame));
     return;
 }
@@ -294,10 +294,17 @@ int main() {
                 clear_buffer(fd);
                 transmit_instruction_frame(fd, id, s, params, values, params_size);
                 usleep(100);
-                receive_status_frame(fd, id, frame);
+                int n=0;
+                unsigned char buf;
+                do{
+                    n = read(fd,&buf,1);
+                    printf("%X ",buf);
+                }while(n>0);
+                //receive_status_frame(fd, id, frame);
         }
         id++;
     }while(s >= 1 && s <= 4 );
     close(fd);
     return 0;
 }
+
