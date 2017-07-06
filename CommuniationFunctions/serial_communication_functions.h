@@ -9,6 +9,4 @@ void clear_buffer(int fd);
 void transmit_instruction_frame(int fd, int id, int instruction, unsigned char params[], unsigned char values [], unsigned char params_size);
 _Bool receive_status_frame(int fd,int id,unsigned char instruction[]);
 
-void ciao();
-
 #endif //COMMUNICATIONCHANNEL_SERIAL_COMMUNICATION_FUNCTIONS_H

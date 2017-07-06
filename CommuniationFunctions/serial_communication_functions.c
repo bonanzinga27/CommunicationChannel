@@ -52,7 +52,7 @@ int set_interface_attribs (int fd, int speed, int parity, int should_block) {
 void clear_buffer(int fd){
     tcflush(fd,TCIOFLUSH);
 }
- 
+
 void transmit_instruction_frame(int fd, int id, int instruction, unsigned char params[], unsigned char values [], unsigned char params_size){
 
     unsigned char frame_length = (unsigned char)(4 + 2 * (int)params_size);      // Viene considerato anche id e istruzione
