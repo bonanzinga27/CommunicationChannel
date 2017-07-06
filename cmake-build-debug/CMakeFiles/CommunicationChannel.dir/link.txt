@@ -1,0 +1,1 @@
+/usr/bin/cc  -g   CMakeFiles/CommunicationChannel.dir/CRC_16-CCITT/crc_16ccitt.c.o CMakeFiles/CommunicationChannel.dir/CommunicationFunctions/serial_communication_functions.c.o CMakeFiles/CommunicationChannel.dir/main.c.o  -o CommunicationChannel 
