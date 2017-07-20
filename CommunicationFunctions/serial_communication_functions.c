@@ -1,15 +1,8 @@
 /** Created by Andrea Bonanzinga on 7/6/17. **/
 
-#include <stdio.h>
-#include <stdint.h>
-#include <fcntl.h>
-#include <termio.h>
-#include <unistd.h>
-#include <stdbool.h>
-#include "../CRC_16-CCITT/crc_16ccitt.h"
 #include "serial_communication_functions.h"
 
-int start_connection(){
+int start_connection(int speed, int wait){
     //unsigned char portname = portname_selection();
     int fd = open("/dev/ttyACM0", O_RDWR | O_NOCTTY | O_ASYNC);
     if (fd < 0) {
@@ -17,11 +10,13 @@ int start_connection(){
         return -1;
     }
     fcntl(fd, F_SETFL, 0);
-    set_interface_attribs(fd, B9600, 0, 0);             // set speed to 9.600 bps, 8n1 (no parity) and non blocking
+    if (set_interface_attribs(fd, speed, 0, 0)) {           // set speed to 9.600 bps, 8n1 (no parity) and non blocking
+        printf("Error setting interface attributes");
+        return -1;
+    }
     if( tcflush(fd,TCIOFLUSH) == 0)
         printf("%s successfully flushed.\n", "/dev/ttyACM0");
-    sleep(2);
-    printf("Start connection finished.\n");
+    sleep(wait);
     return fd;
 }
 
@@ -49,51 +44,34 @@ int set_interface_attribs (int fd, int speed, int parity, int should_block) {
     tty.c_oflag = 0;                                // No remapping, no delays
     /* Control characters */
     tty.c_cc[VMIN]  = should_block ? (cc_t)6 : (cc_t)0;         // Minimum number of character to be read
-    tty.c_cc[VTIME] = 5;                            // Minimum time to wait for every character read (tenth of a second)
+    tty.c_cc[VTIME] = 1;                            // Minimum time to wait for every character read (tenth of a second)
     if (tcsetattr (fd, TCSAFLUSH, &tty) != 0) {
         perror("error from tcsetattr-");
         return -1;
     }
-    printf("Serial inferface correctly configured");
+    printf("Serial inferface correctly configured\n");
     return 0;
 }
 
 void clear_buffer(int fd){
-    tcflush(fd,TCIOFLUSH);
+    int n=0;
+    uint8_t* buf;
+    do{
+        read(fd,&buf,1);
+    }while(n>0);
 }
 
-void transmit_instruction_frame(int fd, int id, int instruction, unsigned char params[], unsigned char values [], unsigned char params_size){
-
-    unsigned char frame_length = (unsigned char)(4 + 2 * (int)params_size);      // Viene considerato anche id e istruzione
-    unsigned char frame[ HEADER_LENGTH + frame_length +1 ];
-    unsigned char instruction_type = 0x00;
-    //printf("Frame length is: %d\n",HEADER_LENGTH + frame_length);
+void transmit_instruction_frame(int fd, int id, uint8_t instruction, uint8_t params[], uint8_t values [], int params_size){
+    uint8_t content_length = ( uint8_t )(4 + 2 * params_size);
+    uint8_t frame[ HEADER_LENGTH + content_length +1 ];
 
     frame[0]= HEADER1;
     frame[1]= HEADER2;
     frame[2]= HEADER3;
-    frame[3]= frame_length;                                         //Length
-    frame[4]= (unsigned char)id;                                    //ID
-    /*
-     * QUESTO SWITCH VA RIVISTO/ELIMINATO
-     */
-    switch(instruction){
-        case 1:
-            instruction_type = STRAIGHT;
-            break;
-        case 2:
-            instruction_type = ROTATE;
-            break;
-        case 3:
-            instruction_type = RESET;
-            break;
-        default:
-            printf("Sicuro di non aver sbagliato?");
-            break;
-    }
-    frame[5] = instruction_type;
+    frame[3]= content_length;                                         //Length
+    frame[4]= ( uint8_t )id;                                    //ID
+    frame[5] = instruction;
     int j = 5;
-    //printf("j is %d",j);
     for(int i = 0; i < params_size; i++) {
         j++;
         frame[j] = params[i];
@@ -110,11 +88,7 @@ void transmit_instruction_frame(int fd, int id, int instruction, unsigned char p
     frame[j] = crc_low;
     j++;
     frame[j] = crc_high;
-
-    printf("CRC is: %X\n",crc);
-    /*printf("CRC high is: %X\n",crc_high);
-    printf("CRC low is: %X\n",crc_low);*/
-    /*printf("\nI'm sending: ");
+    /*printf("\nCRC is: %X\n",crc);
     for( int i = 0; i< sizeof(frame); i++) {
         printf("%X ",frame[i]);
     }*/
@@ -122,32 +96,43 @@ void transmit_instruction_frame(int fd, int id, int instruction, unsigned char p
     return;
 }
 
-_Bool receive_status_frame(int fd,int id,unsigned char instruction[]){
+_Bool receive_status_frame(int fd, int id, uint8_t instruction[]){
     int count = 0;
     int buff_length;
-    unsigned char* buf;
-    unsigned char first_header = 0x00;
+    uint8_t* buf;
+    uint8_t first_header = 0x00;
     _Bool valid_header = false;
-    while (valid_header == false && count < 4) {
+
+    while (valid_header == false && count < 3) {
         read(fd, &buf,1);
-        if (first_header == 0x00 && (unsigned char)buf ==  0xFF) {
-            first_header = (unsigned char)buf;                                // ELIMINARE L'ASTERISCO SE DA PROBLEMI
-        } else if (first_header == 0xFF && (unsigned char)buf == 0xFD) {
+        if (first_header == 0x00 && ( uint8_t )buf ==  0xFF) {
+            first_header = ( uint8_t )buf;
+        } else if (first_header == 0xFF && ( uint8_t )buf == 0xFD) {
             valid_header = true;
         }
         count++;
     }
     if ( count == 4 )
-        return NACK;
-
+        return false;
     read(fd,&buff_length,1);
-    //printf("Buff Length is: %X\n",buff_length);
     for(int i = 0; i < buff_length; i++){
         read(fd, &instruction[i],1);
         printf("%X ",instruction[i]);
     }
-    //printf("\nI'm returning %X",instruction[1]);
-    if( instruction[1] == ACK)
-        return true;                                          // Instruction[1] contain the acknowledgment information
-    return false;
+    if( instruction[1] == ACK && instruction[0] == id) {              // Instruction[1] contain the acknowledgment information meanwhile instruction[0] contain the ID
+        printf("\nInstruction sent successfully\n");
+        return true;
+    }else{
+        printf("\nError occur: retrying\n");
+        return false;
+    }
+}
+
+void read_for_test(int fd){
+    ssize_t n=0;
+    unsigned char buf;
+    do{
+        n = read(fd,&buf,1);
+        printf("%X ",buf);
+    }while(n>0);
 }

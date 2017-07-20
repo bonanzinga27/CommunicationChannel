@@ -9,6 +9,7 @@ CMakeFiles/CommunicationChannel.dir/CommunicationFunctions/serial_communication_
 CMakeFiles/CommunicationChannel.dir/CommunicationFunctions/serial_communication_functions.c.o: ../CommunicationFunctions/serial_communication_functions.h
 CMakeFiles/CommunicationChannel.dir/CommunicationFunctions/serial_communication_functions.c.o: ../CommunicationProtocol/protocol_keywords.h
 
+CMakeFiles/CommunicationChannel.dir/main.c.o: ../CRC_16-CCITT/crc_16ccitt.h
 CMakeFiles/CommunicationChannel.dir/main.c.o: ../CommunicationFunctions/serial_communication_functions.h
 CMakeFiles/CommunicationChannel.dir/main.c.o: ../CommunicationProtocol/protocol_keywords.h
 CMakeFiles/CommunicationChannel.dir/main.c.o: ../main.c

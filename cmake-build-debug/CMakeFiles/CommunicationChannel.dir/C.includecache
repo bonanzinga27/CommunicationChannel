@@ -17,6 +17,10 @@ stdint.h
 -
 
 /home/andrea/Documents/GIT/CommunicationChannel/CommunicationFunctions/serial_communication_functions.c
+serial_communication_functions.h
+/home/andrea/Documents/GIT/CommunicationChannel/CommunicationFunctions/serial_communication_functions.h
+
+/home/andrea/Documents/GIT/CommunicationChannel/CommunicationFunctions/serial_communication_functions.h
 stdio.h
 -
 stdint.h
@@ -31,10 +35,6 @@ stdbool.h
 -
 ../CRC_16-CCITT/crc_16ccitt.h
 /home/andrea/Documents/GIT/CommunicationChannel/CRC_16-CCITT/crc_16ccitt.h
-serial_communication_functions.h
-/home/andrea/Documents/GIT/CommunicationChannel/CommunicationFunctions/serial_communication_functions.h
-
-/home/andrea/Documents/GIT/CommunicationChannel/CommunicationFunctions/serial_communication_functions.h
 ../CommunicationProtocol/protocol_keywords.h
 /home/andrea/Documents/GIT/CommunicationChannel/CommunicationProtocol/protocol_keywords.h
 
