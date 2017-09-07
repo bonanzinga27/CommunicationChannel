@@ -7,13 +7,13 @@
 #IncludeRegexTransform: 
 
 /home/andrea/Documents/GIT/CommunicationChannel/CRC_16-CCITT/crc_16ccitt.c
-stdio.h
--
 crc_16ccitt.h
 /home/andrea/Documents/GIT/CommunicationChannel/CRC_16-CCITT/crc_16ccitt.h
 
 /home/andrea/Documents/GIT/CommunicationChannel/CRC_16-CCITT/crc_16ccitt.h
 stdint.h
+-
+stdio.h
 -
 
 /home/andrea/Documents/GIT/CommunicationChannel/CommunicationFunctions/serial_communication_functions.c

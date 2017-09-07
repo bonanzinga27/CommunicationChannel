@@ -1,8 +1,8 @@
-#include <stdio.h>
 #include "crc_16ccitt.h"
 
-#define CRC16 0x1021
-
+/** Funzione che implementa il controllo ciclico di ridondanza.
+ *  Preso dal WEB.
+ * **/
 uint16_t gen_crc16(uint8_t *data, uint16_t size) {
     uint16_t out = 0;
     int bits_read = 0, bit_flag;
@@ -14,7 +14,7 @@ uint16_t gen_crc16(uint8_t *data, uint16_t size) {
         bit_flag = out >> 15;
         /* Get next bit: */
         out <<= 1;
-        out |= (*data >> bits_read) & 1; // item a) work from the least significant bits
+        out |= (*data >> bits_read) & 1;
         /* Increment bit counter: */
         bits_read++;
         if(bits_read > 7)
